@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.first8.hu.ticketsale.registration.Account;
 import nl.first8.hu.ticketsale.util.TestRepository;
 import nl.first8.hu.ticketsale.venue.Concert;
+import nl.first8.hu.ticketsale.venue.Genre;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,9 +47,9 @@ public class ReportingIntegrationTest {
     @Test
     public void testReport() throws Exception {
 
-        Concert concertMetal1 = helper.createConcert("Five Finger Death Punch", "metal", "Utrecht");
-        Concert concertMetal2 = helper.createConcert("Disturbed", "metal", "Apeldoorn");
-        Concert concertElec= helper.createConcert("Pogo", "electronica", "Amsterdam");
+        Concert concertMetal1 = helper.createConcert("Five Finger Death Punch", Genre.METAL, "Utrecht");
+        Concert concertMetal2 = helper.createConcert("Disturbed", Genre.METAL, "Apeldoorn");
+        Concert concertElec= helper.createConcert("Pogo", Genre.ELECTRONICA, "Amsterdam");
         Account accountZeist = helper.createAccount("user@zeist.museum", "Zeist");
         Account accountNieuwegein = helper.createAccount("user@nieuwegein.museum", "Nieuwegein");
         Account accountHouten = helper.createAccount("user@houten.museum", "Houten");
