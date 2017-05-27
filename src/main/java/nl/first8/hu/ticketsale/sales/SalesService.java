@@ -1,18 +1,17 @@
 package nl.first8.hu.ticketsale.sales;
 
-import java.time.Instant;
-import java.time.ZonedDateTime;
-import java.util.Date;
 import nl.first8.hu.ticketsale.registration.Account;
 import nl.first8.hu.ticketsale.registration.RegistrationRepository;
+import nl.first8.hu.ticketsale.venue.Concert;
 import nl.first8.hu.ticketsale.venue.VenueRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import nl.first8.hu.ticketsale.venue.Concert;
 
 @Service
 public class SalesService {
@@ -46,6 +45,16 @@ public class SalesService {
         sale.setSellDate(timestamp);
 
         salesRepository.insert(sale);
+
+        insertAuditTrail(account, sale);
+    }
+
+    @Transactional(Transactional.TxType.REQUIRES_NEW)
+    private void insertAuditTrail(Account account, Sale sale) {
+        AuditTrail auditTrail = new AuditTrail();
+        auditTrail.setAccount(account);
+        auditTrail.setSale(sale);
+        salesRepository.insert(auditTrail);
     }
 
     public Optional<Sale> getSale(Long accountId, Long concertId) {
